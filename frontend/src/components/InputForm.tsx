@@ -72,7 +72,7 @@ export const InputForm = () => {
 
         console.log("form data", formData)
 
-        await fetch('http://localhost:3000/uploadPhoto', {
+        await fetch('https://refacer.onrender.com/uploadPhoto', {
             method: "POST",
             body: formData
         });
