@@ -40,17 +40,13 @@ export const InputForm = () => {
         },
     })
 
-    // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
-    }
+
 
 
     const [file, setFile] = useState<File | null>()
+    const [prompt, setPrompt] = useState<string | null>(null)
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
         if (event.target.files) {
             const newFile = event.target.files[0]
             setFile(newFile)
@@ -58,9 +54,38 @@ export const InputForm = () => {
         }
     }
 
-    const handleSubmit = () => {
-        if (file)
+    function handlePromptChange(event: React.ChangeEvent<HTMLInputElement>) {
+        if (event.target.value) {
+            const newText = event.target.value
+            setPrompt(newText)
+            console.log(prompt)
+        }
+    }
+
+    const handleSubmit = async () => {
+
+        const formData = new FormData();
+
+        if (file && prompt) {
+
             console.log("uploading file")
+            formData.append("file", file)
+            console.log("uploading prompt")
+            formData.append("prompt", prompt)
+        }
+        else {
+            console.error("Error: invalid prompt or file")
+        }
+
+        console.log("form data", formData)
+
+        const response = await fetch('http://localhost:3000/upload', {
+            method: "POST",
+            body: formData
+        });
+
+
+
     }
 
 
@@ -78,15 +103,15 @@ export const InputForm = () => {
                     <div className="text-xs flex flex-col">
                         Prompt
 
-                        <input className="border border-gray-300 rounded p-1">
+                        <input className="border border-gray-300 rounded p-1" onChange={handlePromptChange}>
                         </input>
                     </div>
 
 
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Small file input</label>
-                    <input className="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="small_size" type="file" onChange={handleChange} />
+                    <input className="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="small_size" type="file" onChange={handleFileChange} />
 
-                    <Button className="bg-orange-500 rounded text-white">
+                    <Button className="bg-orange-500 rounded text-white" onClick={handleSubmit}>
                         Submit
                     </Button>
 
