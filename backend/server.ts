@@ -37,7 +37,7 @@ app.post('/uploadPhoto', upload.single('imageFile'), (req, res) => {
     }
 
     const file = req.file; // Uploaded file object
-    const imageUrl = `${SERVER_URL}/uploads/${file.filename}`;
+    const imageUrl = `https://refacer.onrender.com/uploads/${file.filename}`;
     const api_url = `${api_base_url}${imageUrl}`;
 
     var myHeaders = new Headers();
@@ -65,7 +65,7 @@ app.post('/uploadPhoto', upload.single('imageFile'), (req, res) => {
 app.use('/uploads', express.static(uploadDir));
 
 // Start the server
-export const SERVER_URL = process.env.SERVER_URL || "http://localhost"
+export const SERVER_URL = process.env.SERVER_URL
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on ${SERVER_URL}:${PORT}`);
