@@ -33,7 +33,7 @@ const upload = multer({ storage: storage });
 
 app.post('/uploadPhoto', upload.single('imageFile'), (req, res) => {
     if (!req.file) {
-        return res.status(400).send({ error: 'No file uploaded' + req });
+        return res.status(400).json({ error: 'No file uploaded', rewef: req });
     }
 
     const file = req.file; // Uploaded file object
@@ -49,11 +49,14 @@ app.post('/uploadPhoto', upload.single('imageFile'), (req, res) => {
         headers: myHeaders
     };
 
+    debugger;
+
     fetch(api_url, requestOptions)
         .then(response => response.text())
         .then(jsonString => {
             const resultObject = JSON.parse(jsonString);
             const resultUrl = resultObject.result;
+            console.log(JSON.stringify(resultUrl))
             res.send(resultUrl);
         })
         .catch(error => res.status(400).send({
