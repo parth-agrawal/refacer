@@ -56,7 +56,7 @@ app.post('/uploadPhoto', upload.single('imageFile'), (req, res) => {
         .then(jsonString => {
             const resultObject = JSON.parse(jsonString);
             const resultUrl = resultObject.result;
-            console.log(JSON.stringify(resultUrl))
+            console.log(resultUrl)
             res.send(resultUrl);
         })
         .catch(error => res.status(400).send({
