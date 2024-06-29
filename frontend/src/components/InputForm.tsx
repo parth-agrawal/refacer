@@ -21,8 +21,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { ChangeEventHandler, useState } from "react"
-import e from "express"
+import { useState } from "react"
 
 
 export function ProfileForm() {
@@ -32,13 +31,7 @@ export function ProfileForm() {
 
 
 export const InputForm = () => {
-    // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            username: "",
-        },
-    })
+
 
 
 
@@ -69,7 +62,7 @@ export const InputForm = () => {
         if (file && prompt) {
 
             console.log("uploading file")
-            formData.append("file", file)
+            formData.append("imageFile", file)
             console.log("uploading prompt")
             formData.append("prompt", prompt)
         }
@@ -79,7 +72,7 @@ export const InputForm = () => {
 
         console.log("form data", formData)
 
-        const response = await fetch('http://localhost:3000/upload', {
+        await fetch('http://localhost:3000/uploadPhoto', {
             method: "POST",
             body: formData
         });
