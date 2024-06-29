@@ -1,0 +1,4 @@
+flask
+gradio-client
+python-dotenv
+flask-cors
