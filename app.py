@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from gradio_client import Client, file
 from typing import Any, List
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
 
 def face_swap_local(target_path: str, source_path: str, slider: int = 100, adv_slider: int = 100, settings: List[str] = ["Adversarial Defense"], api_name: str = "/run_inference") -> Any:
     """
