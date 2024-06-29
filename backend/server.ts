@@ -60,7 +60,7 @@ app.post('/uploadPhoto', upload.single('imageFile'), (req, res) => {
             res.send(resultUrl);
         })
         .catch(error => res.status(400).send({
-            message: error.toString()
+            message: imageUrl
         }));
 });
 
