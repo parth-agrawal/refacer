@@ -65,7 +65,7 @@ app.post('/uploadPhoto', upload.single('imageFile'), (req, res) => {
 app.use('/uploads', express.static(uploadDir));
 
 // Start the server
-export const SERVER_URL = "http://localhost";
+export const SERVER_URL = process.env.SERVER_URL || "http://localhost"
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on ${SERVER_URL}:${PORT}`);
